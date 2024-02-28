@@ -6,6 +6,8 @@ import {
 import Home from '../features/home/Home.vue';
 import Tasks from '../features/tasks/Tasks.vue';
 import Main from '../pages/Main.vue';
+import HomeSideBar from '../features/home/HomeSideBar.vue';
+import TasksSideBar from '../features/tasks/TasksSideBar.vue';
 
 const routes: RouteRecordRaw[] = [
     {
@@ -17,12 +19,18 @@ const routes: RouteRecordRaw[] = [
             {
                 path: '/home',
                 name: 'home',
-                component: Home,
+                components: {
+                    default: Home,
+                    aside: HomeSideBar,
+                },
             },
             {
                 path: '/tasks',
                 name: 'tasks',
-                component: Tasks,
+                components: {
+                    default: Tasks,
+                    aside: TasksSideBar,
+                },
             },
         ],
     },

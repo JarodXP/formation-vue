@@ -13,7 +13,14 @@
     </nav>
   </header>
 
-  <router-view />
+  <main>
+    <aside>
+      <router-view name="aside" />
+    </aside>
+    <div>
+      <router-view />
+    </div>
+  </main>
 </template>
 
 <style scoped>
@@ -32,5 +39,16 @@ header > p {
 header > nav {
   display: flex;
   gap: 4rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+aside {
+  height: 100vh;
+  background-color: #24f739;
+  padding: 10px;
 }
 </style>
