@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import SimpleTask from './SimpleTask.vue';
+import { useTasksStore } from './tasksStore';
+import { storeToRefs } from 'pinia';
 
 // TODO: Rationnaliser le type utilisé dans d'autres composants en le déplaçant dans un fichier à part
 type Task = { id: number; name: string };
@@ -8,6 +9,8 @@ type Task = { id: number; name: string };
 // On définit de façon statique des données pour les tâches
 
 // DEMO: typer la variable et modifier un élément pour voir l'erreur
+// IMPORTANT: pour les calls AJAX, utiliser Axios et regarder la library Tanstack Query.
+
 const tasks = [
   { id: 1, name: 'Faire les courses', selected: false },
   { id: 2, name: 'Acheter du pain', selected: false },
@@ -41,13 +44,13 @@ const tasks = [
 // On type la variable car elle est undefined, et typescript ne saura pas ce qu'on veut mettre dedans.
 // BONNE PRATIQUE: utiliser le type Task['id'] au lieu de number: le résultat est le même mais si on change
 // d'avis pour que l'id soit un string (ex: utilisation d'uuid), il n'y aura rien a retoucher de ce côté.
-const selected = ref<Task['id']>();
 
 // DEMO: changer le type Task['id'] par Task['name'] pour voir l'erreur
-const selectTask = (taskId: Task['id']) => {
-  console.log(`Task selected: ${taskId}`);
 
-  selected.value = taskId;
+const { selectedId } = storeToRefs(useTasksStore());
+
+const selectTask = (taskId: Task['id']) => {
+  selectedId.value = taskId;
 };
 </script>
 
@@ -61,7 +64,7 @@ const selectTask = (taskId: Task['id']) => {
         <SimpleTask
           :id="task.id"
           :name="task.name"
-          :selected="task.id === selected"
+          :selected="task.id === selectedId"
           @select="selectTask"
         />
       </li>
