@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('spa-vue');
 });
+
+Route::get('/{vue_capture?}', function () {
+    return view('spa-vue');
+})->where('vue_capture', '[\/\w\.-]*');
